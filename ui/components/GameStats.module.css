@@ -1,0 +1,39 @@
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin: 16px 0;
+  backdrop-filter: blur(10px);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .stats {
+    padding: 12px;
+    margin: 12px 0;
+  }
+
+  .value {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,15 @@
+.grid {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    gap: 8px;
+    padding: 12px;
+  }
+}
