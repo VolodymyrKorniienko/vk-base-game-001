@@ -7,15 +7,17 @@ export function WalletConnect() {
   const { address, isConnected } = useAccount();
 
   return (
-    <div className={styles.container}>
+    <div>
       {isConnected && address ? (
         <div className={styles.connected}>
-          Connected: {address.slice(0, 6)}…{address.slice(-4)}
+          <span className={styles.address}>
+            {address.slice(0, 6)}…{address.slice(-4)}
+          </span>
         </div>
       ) : (
         <button
-          className={styles.button}
-          // OnchainKit откроет модальное окно сам благодаря miniKit.enabled
+          className={styles.connectButton}
+          // Модальное окно автоматически откроется через miniKit.enabled
           onClick={() => {}}
         >
           Connect Wallet
