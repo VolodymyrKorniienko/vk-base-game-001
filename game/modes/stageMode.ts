@@ -1,44 +1,46 @@
 import { MemoryEngine } from '../engine';
-import type { LevelConfig, GameResult } from '../types';
-import { getNextLevel } from '../levels/config';
+import type { LevelConfig, GameResult, GameConfig } from '../types';
 
 export class StageMode {
-  private currentLevelIndex: number = 0;
+  private currentLevelIndex = 0;
   private levels: LevelConfig[];
   private engine: MemoryEngine | null = null;
-  private completedLevels: Set<string> = new Set();
+  private completedLevels: Set<number> = new Set();
 
   constructor(levels: LevelConfig[]) {
     this.levels = levels;
   }
 
-  startLevel(levelId?: string): MemoryEngine {
-    const level = levelId
+  startLevel(levelId?: number): MemoryEngine {
+    const level = levelId !== undefined
       ? this.levels.find((l) => l.id === levelId)
       : this.levels[this.currentLevelIndex];
 
     if (!level) {
-      throw new Error(`Level not found: ${levelId || 'current'}`);
+      throw new Error(`Level not found: ${levelId ?? 'current'}`);
     }
 
-    this.engine = new MemoryEngine(level);
+    const gameConfig: GameConfig = {
+      rows: level.rows,
+      cols: level.cols,
+      previewDuration: level.previewDuration,
+    };
+
+    this.engine = new MemoryEngine(gameConfig);
     this.engine.initialize();
+
     return this.engine;
   }
 
   getCurrentLevel(): LevelConfig | null {
-    return this.levels[this.currentLevelIndex] || null;
+    return this.levels[this.currentLevelIndex] ?? null;
   }
 
   completeLevel(result: GameResult): boolean {
-    if (!this.engine) {
-      return false;
-    }
+    if (!this.engine) return false;
 
     const currentLevel = this.getCurrentLevel();
-    if (!currentLevel) {
-      return false;
-    }
+    if (!currentLevel) return false;
 
     this.completedLevels.add(currentLevel.id);
 
@@ -55,10 +57,9 @@ export class StageMode {
   }
 
   getNextLevel(): LevelConfig | null {
-    if (!this.hasNextLevel()) {
-      return null;
-    }
-    return this.levels[this.currentLevelIndex + 1];
+    return this.hasNextLevel()
+      ? this.levels[this.currentLevelIndex + 1]
+      : null;
   }
 
   getProgress(): { current: number; total: number; completed: number } {
