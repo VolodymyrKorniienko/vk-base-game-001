@@ -11,7 +11,7 @@ export class StageMode {
     this.levels = levels;
   }
 
-  startLevel(levelId?: number): MemoryEngine {
+  startLevel(levelId?: string): MemoryEngine {
     const level = levelId !== undefined
       ? this.levels.find((l) => l.id === levelId)
       : this.levels[this.currentLevelIndex];
