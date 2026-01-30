@@ -1,10 +1,4 @@
-import type { GameConfig } from '../types';
-
-export interface LevelConfig extends GameConfig {
-  id: string;
-  name: string;
-  difficulty: number;
-}
+import type { GameConfig, LevelConfig } from '../types';
 
 export const STAGE_LEVELS: LevelConfig[] = [
   {
@@ -70,9 +64,8 @@ export function getLevelById(id: string): LevelConfig | undefined {
 }
 
 export function getNextLevel(currentLevelId: string): LevelConfig | null {
-  const currentIndex = STAGE_LEVELS.findIndex((level) => level.id === currentLevelId);
-  if (currentIndex === -1 || currentIndex === STAGE_LEVELS.length - 1) {
-    return null;
-  }
-  return STAGE_LEVELS[currentIndex + 1];
+  const index = STAGE_LEVELS.findIndex((l) => l.id === currentLevelId);
+  return index >= 0 && index < STAGE_LEVELS.length - 1
+    ? STAGE_LEVELS[index + 1]
+    : null;
 }
