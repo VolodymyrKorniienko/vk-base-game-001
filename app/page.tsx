@@ -27,7 +27,7 @@ export default function Home() {
     setGameMode('arcade');
   };
 
-  const handleBackToMenu = () => {
+  const _handleBackToMenu = () => {
     setGameMode(null);
   };
 
