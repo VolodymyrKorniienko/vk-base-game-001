@@ -5,7 +5,7 @@ export class StageMode {
   private currentLevelIndex = 0;
   private levels: LevelConfig[];
   private engine: MemoryEngine | null = null;
-  private completedLevels: Set<number> = new Set();
+  private completedLevels: Set<string> = new Set();
 
   constructor(levels: LevelConfig[]) {
     this.levels = levels;
@@ -37,7 +37,7 @@ export class StageMode {
   }
 
   completeLevel(result: GameResult): boolean {
-    if (!this.engine) return false;
+    if (!this.engine || !result.completed) return false;
 
     const currentLevel = this.getCurrentLevel();
     if (!currentLevel) return false;
