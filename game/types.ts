@@ -30,3 +30,17 @@ export interface GameResult {
   timeElapsed: number;
   stars: number;
 }
+
+export interface LevelConfig extends GameConfig {
+  id: number;
+  theme: string;
+
+  /**
+   * Максимально допустимые ходы для звёзд
+   * Если не указано — звёзды считаются по дефолтной логике
+   */
+  starThresholds?: {
+    three: number;
+    two: number;
+  };
+}
