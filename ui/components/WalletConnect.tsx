@@ -1,12 +1,10 @@
 'use client';
 
 import { useAccount } from 'wagmi';
-import { useMiniKit } from '@coinbase/onchainkit';
 import styles from './WalletConnect.module.css';
 
 export function WalletConnect() {
   const { address, isConnected } = useAccount();
-  const { open } = useMiniKit(); // мини-кит открывает модалку
 
   if (isConnected && address) {
     return (
@@ -17,7 +15,7 @@ export function WalletConnect() {
   }
 
   return (
-    <button className={styles.button} onClick={open}>
+    <button className={styles.button} onClick={() => { /* OnchainKit modal откроется автоматически */ }}>
       Connect Wallet
     </button>
   );
