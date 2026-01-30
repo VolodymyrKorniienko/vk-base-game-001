@@ -1,12 +1,12 @@
 'use client';
 
 import { useAccount } from 'wagmi';
-import { useConnectModal } from '@coinbase/onchainkit';
+import { useOnchainKit } from '@coinbase/onchainkit';
 import styles from './WalletConnect.module.css';
 
 export function WalletConnect() {
   const { address, isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
+  const { connect } = useOnchainKit(); // вместо useConnectModal
 
   if (isConnected && address) {
     return (
@@ -17,7 +17,7 @@ export function WalletConnect() {
   }
 
   return (
-    <button className={styles.button} onClick={openConnectModal}>
+    <button className={styles.button} onClick={() => connect()}>
       Connect Wallet
     </button>
   );
