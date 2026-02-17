@@ -1,4 +1,6 @@
 import type { Card, CardState, GameState, GameConfig, GameStats, GameResult } from '../types';
+import { calculateStars } from '../scoring';
+import { selectAssetPairs } from '../assets';
 
 export class MemoryEngine {
   private cards: Card[] = [];
@@ -26,16 +28,22 @@ export class MemoryEngine {
       throw new Error('Grid must have even number of cards');
     }
 
-    const values: number[] = [];
-    for (let i = 0; i < pairs; i++) {
-      values.push(i, i);
-    }
+    const assetPairs = selectAssetPairs({
+      count: pairs,
+      categories: this.config.categories,
+    });
 
-    this.shuffleArray(values);
+    const cardData: Array<{ value: number; image: string }> = assetPairs.map((asset, index) => ({
+      value: Math.floor(index / 2),
+      image: asset.src,
+    }));
 
-    this.cards = values.map((value, index) => ({
+    this.shuffleArray(cardData);
+
+    this.cards = cardData.map((data, index) => ({
       id: `card-${index}`,
-      value,
+      value: data.value,
+      image: data.image,
       state: 'hidden' as CardState,
       position: index,
     }));
@@ -184,7 +192,14 @@ export class MemoryEngine {
       return null;
     }
 
-    const stars = this.calculateStars();
+    const stars = calculateStars(
+      {
+        moves: this.stats.moves,
+        mistakes: this.stats.mistakes,
+        timeElapsed: this.stats.timeElapsed,
+      },
+      this.config
+    );
     return {
       completed: true,
       moves: this.stats.moves,
@@ -192,16 +207,6 @@ export class MemoryEngine {
       timeElapsed: this.stats.timeElapsed,
       stars,
     };
-  }
-
-  private calculateStars(): number {
-    const totalPairs = this.cards.length / 2;
-    const maxMoves = totalPairs * 2;
-    const moveScore = Math.max(0, 1 - (this.stats.mistakes / maxMoves));
-    
-    if (moveScore >= 0.8) return 3;
-    if (moveScore >= 0.5) return 2;
-    return 1;
   }
 
   private shuffleArray<T>(array: T[]): void {

@@ -1,7 +1,6 @@
 import type { GameResult } from '../game/types';
 
 export function generateTwitterShareUrl(result: GameResult): string {
-  const stars = '★'.repeat(result.stars) + '☆'.repeat(3 - result.stars);
   const text = `I just completed a memory game level with ${result.stars} stars! 🧠✨\n\nMoves: ${result.moves} | Mistakes: ${result.mistakes}\n\n#Base #MemoryGame #OnChainGaming`;
   
   const params = new URLSearchParams({

@@ -1,3 +1,5 @@
+import type { CardCategory } from './assets';
+
 export type CardState = 'hidden' | 'revealed' | 'matched';
 
 export interface Card {
@@ -5,6 +7,7 @@ export interface Card {
   value: number;
   state: CardState;
   position: number;
+  image: string;
 }
 
 export type GameState = 'idle' | 'preview' | 'playing' | 'paused' | 'finished';
@@ -13,6 +16,7 @@ export interface GameConfig {
   rows: number;
   cols: number;
   previewDuration: number;
+  categories?: CardCategory[];
 }
 
 export interface GameStats {

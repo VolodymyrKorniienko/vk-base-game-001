@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import Image from 'next/image';
 import type { Card as CardType } from '../../game/types';
 import styles from './Card.module.css';
 
@@ -18,12 +19,8 @@ export const Card = memo(function Card({ card, onClick, disabled }: CardProps) {
     onClick();
   };
 
-  const getCardContent = () => {
-    if (card.state === 'hidden') {
-      return '?';
-    }
-    return card.value;
-  };
+  const isRevealed = card.state === 'revealed' || card.state === 'matched';
+  const showImage = isRevealed && card.image;
 
   return (
     <button
@@ -32,7 +29,19 @@ export const Card = memo(function Card({ card, onClick, disabled }: CardProps) {
       disabled={disabled || card.state === 'matched'}
       aria-label={`Card ${card.position + 1}`}
     >
-      <span className={styles.content}>{getCardContent()}</span>
+      {showImage ? (
+        <div className={styles.imageContainer}>
+          <Image
+            src={card.image}
+            alt={`Card ${card.position + 1}`}
+            fill
+            sizes="(max-width: 768px) 25vw, 15vw"
+            className={styles.image}
+          />
+        </div>
+      ) : (
+        <span className={styles.content}>?</span>
+      )}
     </button>
   );
 });

@@ -1,5 +1,7 @@
 import type { GameResult, GameConfig } from '../types';
 
+type PerformanceMetrics = Pick<GameResult, 'moves' | 'mistakes' | 'timeElapsed'>;
+
 export interface StarCriteria {
   maxMoves: number;
   maxMistakes: number;
@@ -7,7 +9,7 @@ export interface StarCriteria {
 }
 
 export function calculateStars(
-  result: GameResult,
+  result: PerformanceMetrics,
   config: GameConfig
 ): number {
   const totalPairs = (config.rows * config.cols) / 2;

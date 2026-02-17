@@ -1,4 +1,7 @@
 import type { GameConfig, LevelConfig } from '../types';
+import type { CardCategory } from '../assets';
+
+const STAGE_CATEGORY: CardCategory[] = ['coins'];
 
 export const STAGE_LEVELS: LevelConfig[] = [
   {
@@ -8,6 +11,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 2,
     cols: 2,
     previewDuration: 3000,
+    categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-2',
@@ -16,6 +20,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 2,
     cols: 3,
     previewDuration: 4000,
+    categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-3',
@@ -24,6 +29,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 3,
     cols: 4,
     previewDuration: 5000,
+    categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-4',
@@ -32,6 +38,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 4,
     cols: 4,
     previewDuration: 6000,
+    categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-5',
@@ -40,6 +47,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 4,
     cols: 5,
     previewDuration: 7000,
+    categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-6',
@@ -48,15 +56,18 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 5,
     cols: 6,
     previewDuration: 8000,
+    categories: STAGE_CATEGORY,
   },
 ];
 
+const ARCADE_CATEGORY: CardCategory[] = ['mixed'];
+
 export const ARCADE_CONFIGS: GameConfig[] = [
-  { rows: 2, cols: 2, previewDuration: 3000 },
-  { rows: 2, cols: 3, previewDuration: 4000 },
-  { rows: 3, cols: 4, previewDuration: 5000 },
-  { rows: 4, cols: 4, previewDuration: 6000 },
-  { rows: 4, cols: 5, previewDuration: 7000 },
+  { rows: 2, cols: 2, previewDuration: 3000, categories: ARCADE_CATEGORY },
+  { rows: 2, cols: 3, previewDuration: 4000, categories: ARCADE_CATEGORY },
+  { rows: 3, cols: 4, previewDuration: 5000, categories: ARCADE_CATEGORY },
+  { rows: 4, cols: 4, previewDuration: 6000, categories: ARCADE_CATEGORY },
+  { rows: 4, cols: 5, previewDuration: 7000, categories: ARCADE_CATEGORY },
 ];
 
 export function getLevelById(id: string): LevelConfig | undefined {
