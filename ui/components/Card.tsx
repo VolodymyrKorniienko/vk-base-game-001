@@ -34,8 +34,8 @@ export const Card = memo(function Card({ card, onClick, disabled }: CardProps) {
           <Image
             src={card.image}
             alt={`Card ${card.position + 1}`}
-            fill
-            sizes="(max-width: 768px) 25vw, 15vw"
+            width={250}
+            height={250}
             className={styles.image}
           />
         </div>

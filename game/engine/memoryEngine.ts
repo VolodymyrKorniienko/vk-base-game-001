@@ -33,10 +33,18 @@ export class MemoryEngine {
       categories: this.config.categories,
     });
 
-    const cardData: Array<{ value: number; image: string }> = assetPairs.map((asset, index) => ({
-      value: Math.floor(index / 2),
-      image: asset.src,
-    }));
+    const valueByAssetId = new Map<string, number>();
+    let nextValue = 0;
+
+    const cardData: Array<{ value: number; image: string }> = assetPairs.map((asset) => {
+      const existingValue = valueByAssetId.get(asset.id);
+      if (existingValue !== undefined) {
+        return { value: existingValue, image: asset.src };
+      }
+      const assignedValue = nextValue++;
+      valueByAssetId.set(asset.id, assignedValue);
+      return { value: assignedValue, image: asset.src };
+    });
 
     this.shuffleArray(cardData);
 
