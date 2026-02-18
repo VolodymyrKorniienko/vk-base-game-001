@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { StageModeScreen } from "../ui/screens/StageModeScreen";
 import { ArcadeModeScreen } from "../ui/screens/ArcadeModeScreen";
@@ -9,22 +9,22 @@ import styles from "./page.module.css";
 export default function Home() {
   const { setFrameReady } = useMiniKit();
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
+  const frameReadyCalled = useRef(false);
 
   useEffect(() => {
-    setFrameReady();
-  }, [setFrameReady]);
+    if (!frameReadyCalled.current) {
+      frameReadyCalled.current = true;
+      setFrameReady();
+    }
+  }, []);
 
-  const handleStartStage = () => {
+  const handleStartStage = useCallback(() => {
     setGameMode('stage');
-  };
+  }, []);
 
-  const handleStartArcade = () => {
+  const handleStartArcade = useCallback(() => {
     setGameMode('arcade');
-  };
-
-  const _handleBackToMenu = () => {
-    setGameMode(null);
-  };
+  }, []);
 
   if (gameMode === 'stage') {
     return <StageModeScreen />;

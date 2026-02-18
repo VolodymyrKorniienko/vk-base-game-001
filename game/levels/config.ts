@@ -8,9 +8,9 @@ export const STAGE_LEVELS: LevelConfig[] = [
     id: 'stage-1',
     name: 'Easy Start',
     difficulty: 1,
-    rows: 4,
+    rows: 3,
     cols: 4,
-    previewDuration: 5000,
+    previewDuration: 4000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -18,8 +18,8 @@ export const STAGE_LEVELS: LevelConfig[] = [
     name: 'Getting Started',
     difficulty: 2,
     rows: 4,
-    cols: 5,
-    previewDuration: 6000,
+    cols: 4,
+    previewDuration: 5000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -27,26 +27,26 @@ export const STAGE_LEVELS: LevelConfig[] = [
     name: 'Warming Up',
     difficulty: 3,
     rows: 4,
-    cols: 6,
-    previewDuration: 7000,
+    cols: 5,
+    previewDuration: 6000,
     categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-4',
     name: 'Challenge',
     difficulty: 4,
-    rows: 5,
+    rows: 4,
     cols: 6,
-    previewDuration: 8000,
+    previewDuration: 7000,
     categories: STAGE_CATEGORY,
   },
   {
     id: 'stage-5',
     name: 'Expert',
     difficulty: 5,
-    rows: 6,
+    rows: 5,
     cols: 6,
-    previewDuration: 9000,
+    previewDuration: 8000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -54,8 +54,8 @@ export const STAGE_LEVELS: LevelConfig[] = [
     name: 'Master',
     difficulty: 6,
     rows: 6,
-    cols: 7,
-    previewDuration: 10000,
+    cols: 6,
+    previewDuration: 9000,
     categories: STAGE_CATEGORY,
   },
 ];
@@ -63,11 +63,11 @@ export const STAGE_LEVELS: LevelConfig[] = [
 const ARCADE_CATEGORY: CardCategory[] = ['mixed'];
 
 export const ARCADE_CONFIGS: GameConfig[] = [
+  { rows: 3, cols: 4, previewDuration: 4000, categories: ARCADE_CATEGORY },
   { rows: 4, cols: 4, previewDuration: 5000, categories: ARCADE_CATEGORY },
   { rows: 4, cols: 5, previewDuration: 6000, categories: ARCADE_CATEGORY },
   { rows: 4, cols: 6, previewDuration: 7000, categories: ARCADE_CATEGORY },
   { rows: 5, cols: 6, previewDuration: 8000, categories: ARCADE_CATEGORY },
-  { rows: 6, cols: 6, previewDuration: 9000, categories: ARCADE_CATEGORY },
 ];
 
 export function getLevelById(id: string): LevelConfig | undefined {
