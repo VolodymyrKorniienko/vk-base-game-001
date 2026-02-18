@@ -7,17 +7,12 @@ import { MenuScreen, type GameMode } from "../ui/screens/MenuScreen";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const { isFrameReady, setFrameReady } = useMiniKit();
-  const [isReady, setIsReady] = useState(false);
+  const { setFrameReady } = useMiniKit();
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
 
   useEffect(() => {
-    if (!isFrameReady) {
-      setFrameReady();
-    } else {
-      setIsReady(true);
-    }
-  }, [setFrameReady, isFrameReady]);
+    setFrameReady();
+  }, [setFrameReady]);
 
   const handleStartStage = () => {
     setGameMode('stage');
@@ -30,14 +25,6 @@ export default function Home() {
   const _handleBackToMenu = () => {
     setGameMode(null);
   };
-
-  if (!isReady) {
-    return (
-      <div className={styles.loading}>
-        <div className={styles.loader}>Loading...</div>
-      </div>
-    );
-  }
 
   if (gameMode === 'stage') {
     return <StageModeScreen />;
