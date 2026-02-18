@@ -79,6 +79,8 @@
 .image {
   object-fit: contain;
   padding: 8px;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 @keyframes reveal {

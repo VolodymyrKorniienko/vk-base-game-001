@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useReducer } from 'react';
 import { MemoryEngine } from '../../game/engine';
 import { GameGrid } from '../components/GameGrid';
 import { GameStats } from '../components/GameStats';
@@ -19,6 +19,7 @@ export function GameScreen({ config, onComplete, onExit }: GameScreenProps) {
   const [engine, setEngine] = useState<MemoryEngine | null>(null);
   const [previewTime, setPreviewTime] = useState(config.previewDuration);
   const [isPreviewActive, setIsPreviewActive] = useState(false);
+  const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
 
   useEffect(() => {
     const newEngine = new MemoryEngine(config);
@@ -34,6 +35,7 @@ export function GameScreen({ config, onComplete, onExit }: GameScreenProps) {
     engine.startGame();
     setIsPreviewActive(false);
     setPreviewTime(0);
+    forceUpdate();
   }, [engine]);
 
   useEffect(() => {
@@ -60,13 +62,21 @@ export function GameScreen({ config, onComplete, onExit }: GameScreenProps) {
   const handleCardClick = useCallback(
     (position: number) => {
       if (!engine || isPreviewActive) return;
-      engine.revealCard(position);
+      const revealed = engine.revealCard(position);
+      if (revealed) {
+        forceUpdate();
+      }
 
       const result = engine.getResult();
       if (result) {
         setTimeout(() => {
           onComplete(result);
         }, 500);
+      } else {
+        // Schedule re-render after flip-back timeout for mismatched pairs
+        setTimeout(() => {
+          forceUpdate();
+        }, 1100);
       }
     },
     [engine, isPreviewActive, onComplete]
@@ -85,25 +95,39 @@ export function GameScreen({ config, onComplete, onExit }: GameScreenProps) {
     engine.startPreview();
     setPreviewTime(config.previewDuration);
     setIsPreviewActive(true);
+    forceUpdate();
   }, [engine, config.previewDuration]);
 
   if (!engine) {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  const gameState = engine.getState();
   const cards = engine.getCards();
   const stats = engine.getStats();
   const result = engine.getResult();
 
-  if (gameState === 'preview' || isPreviewActive) {
+  if (isPreviewActive) {
     return (
-      <PreviewScreen
-        duration={config.previewDuration}
-        remainingTime={previewTime}
-        onStart={handleStartGame}
-        onSkip={handleSkipPreview}
-      />
+      <div className={styles.gameScreen}>
+        {onExit && (
+          <button className={styles.exitButton} onClick={onExit}>
+            ✕
+          </button>
+        )}
+        <PreviewScreen
+          duration={config.previewDuration}
+          remainingTime={previewTime}
+          onStart={handleStartGame}
+          onSkip={handleSkipPreview}
+        />
+        <GameGrid
+          cards={cards}
+          onCardClick={() => {}}
+          disabled={true}
+          rows={config.rows}
+          cols={config.cols}
+        />
+      </div>
     );
   }
 
