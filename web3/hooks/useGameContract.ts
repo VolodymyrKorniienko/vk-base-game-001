@@ -1,17 +1,24 @@
 'use client';
 
 import { useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
+import { encodeFunctionData } from 'viem';
+import { useSendTransaction } from 'wagmi';
 import { BASE_MEMORY_GAME_ABI, BASE_MEMORY_GAME_ADDRESS, isContractConfigured } from '../contracts/BaseMemoryGame';
+import { appendBuilderAttribution, isBuilderCodeConfigured } from '../builderCode';
 import { useAccount } from 'wagmi';
 
 export function useGameContract() {
   const { address } = useAccount();
-  const { writeContract, data: hash, isPending, error } = useWriteContract();
+  const { writeContract, data: writeHash, isPending: isWritePending, error: writeError } = useWriteContract();
+  const { sendTransaction, data: sendHash, isPending: isSendPending, error: sendError } = useSendTransaction();
+
+  const activeHash = writeHash || sendHash;
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
-    hash,
+    hash: activeHash,
   });
 
   const contractAvailable = isContractConfigured() && !!address;
+  const useAttribution = isBuilderCodeConfigured();
 
   const startSession = async () => {
     if (!contractAvailable) {
@@ -20,6 +27,17 @@ export function useGameContract() {
     }
 
     try {
+      if (useAttribution) {
+        const data = encodeFunctionData({
+          abi: BASE_MEMORY_GAME_ABI,
+          functionName: 'startSession',
+        });
+        return await sendTransaction({
+          to: BASE_MEMORY_GAME_ADDRESS as `0x${string}`,
+          data: appendBuilderAttribution(data),
+        });
+      }
+
       return await writeContract({
         address: BASE_MEMORY_GAME_ADDRESS as `0x${string}`,
         abi: BASE_MEMORY_GAME_ABI,
@@ -27,7 +45,6 @@ export function useGameContract() {
       });
     } catch (err) {
       console.error('Failed to start session:', err);
-      // Не пробрасываем ошибку, чтобы игра продолжала работать
     }
   };
 
@@ -43,6 +60,18 @@ export function useGameContract() {
     }
 
     try {
+      if (useAttribution) {
+        const data = encodeFunctionData({
+          abi: BASE_MEMORY_GAME_ABI,
+          functionName: 'finishGame',
+          args: [BigInt(totalMoves)],
+        });
+        return await sendTransaction({
+          to: BASE_MEMORY_GAME_ADDRESS as `0x${string}`,
+          data: appendBuilderAttribution(data),
+        });
+      }
+
       return await writeContract({
         address: BASE_MEMORY_GAME_ADDRESS as `0x${string}`,
         abi: BASE_MEMORY_GAME_ABI,
@@ -51,7 +80,6 @@ export function useGameContract() {
       });
     } catch (err) {
       console.error('Failed to finish game:', err);
-      // Не пробрасываем ошибку, чтобы игра продолжала работать
     }
   };
 
@@ -65,12 +93,14 @@ export function useGameContract() {
     },
   });
 
+  const isPending = isWritePending || isSendPending || isConfirming;
+
   return {
     startSession,
     finishGame,
-    isPending: contractAvailable ? (isPending || isConfirming) : false,
+    isPending: contractAvailable ? isPending : false,
     isSuccess: contractAvailable ? isSuccess : false,
-    error: contractAvailable ? error : null,
+    error: contractAvailable ? (writeError || sendError) : null,
     session,
     contractAvailable,
   };

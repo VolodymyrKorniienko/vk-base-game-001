@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     if (!frameReadyCalled.current) {
       frameReadyCalled.current = true;
-      setFrameReady();
+      setFrameReady({ disableNativeGestures: true });
     }
   }, []);
 
