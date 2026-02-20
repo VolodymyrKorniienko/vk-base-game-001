@@ -7,7 +7,7 @@ import { MenuScreen, type GameMode } from "../ui/screens/MenuScreen";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const { setFrameReady } = useMiniKit();
+  const { setFrameReady, isFrameReady } = useMiniKit();
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
   const frameReadyCalled = useRef(false);
 
@@ -16,7 +16,7 @@ export default function Home() {
       frameReadyCalled.current = true;
       setFrameReady({ disableNativeGestures: true });
     }
-  }, []);
+  }, [setFrameReady]);
 
   const handleStartStage = useCallback(() => {
     setGameMode('stage');
@@ -32,6 +32,14 @@ export default function Home() {
 
   if (gameMode === 'arcade') {
     return <ArcadeModeScreen />;
+  }
+
+  if (!isFrameReady) {
+    return (
+      <div className={styles.loading}>
+        <span className={styles.loader}>Loading...</span>
+      </div>
+    );
   }
 
   return (

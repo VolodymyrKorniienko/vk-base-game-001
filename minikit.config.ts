@@ -31,6 +31,7 @@ export const minikitConfig = {
     ogTitle: "Improve Your Memory on Base",
     ogDescription: "Memory puzzle game with on-chain NFT achievements on Base",
     ogImageUrl: `${ROOT_URL}/screenshot.png`,
+    noindex: false,
   },
 } as const;
 
