@@ -4,6 +4,10 @@ import { base } from "wagmi/chains";
 import { OnchainKitProvider } from "@coinbase/onchainkit";
 import "@coinbase/onchainkit/styles.css";
 
+const paymasterUrl = process.env.NEXT_PUBLIC_URL
+  ? `${process.env.NEXT_PUBLIC_URL}/api/paymaster`
+  : undefined;
+
 export function RootProvider({ children }: { children: ReactNode }) {
   return (
     <OnchainKitProvider
@@ -13,6 +17,7 @@ export function RootProvider({ children }: { children: ReactNode }) {
         appearance: {
           mode: "auto",
         },
+        paymaster: paymasterUrl,
         wallet: {
           display: "modal",
           preference: "all",

@@ -3,7 +3,7 @@
   justify-content: space-evenly;
   gap: 16px;
   padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   border-radius: 12px;
   margin: 16px 0;
   backdrop-filter: blur(10px);

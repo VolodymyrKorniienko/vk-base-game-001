@@ -5,11 +5,11 @@
   justify-content: center;
   min-height: 100vh;
   padding: 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
 }
 
 .resultWrapper {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 32px;
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: space-around;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   border-radius: 12px;
 }
 
@@ -67,7 +67,7 @@
 
 .arcadeStats {
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   border-radius: 12px;
   text-align: left;
 }
@@ -89,7 +89,7 @@
 .bestRound {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--border-light);
 }
 
 .bestRound h4 {
@@ -118,18 +118,18 @@
 }
 
 .shareButton {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-overlay-hover);
   color: white;
   border: 2px solid white;
 }
 
 .shareButton:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--surface-overlay-active);
 }
 
 .continueButton {
-  background: white;
-  color: #667eea;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
 }
 
 .continueButton:hover:not(:disabled) {
@@ -144,17 +144,17 @@
 }
 
 .restartButton:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
 }
 
 .menuButton {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-light-strong);
 }
 
 .menuButton:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-overlay-hover);
 }
 
 .shareButton:disabled,

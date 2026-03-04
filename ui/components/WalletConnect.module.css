@@ -1,7 +1,7 @@
 .connectButton {
   padding: 12px 24px;
-  background: white;
-  color: #667eea;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -20,7 +20,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   border-radius: 8px;
   backdrop-filter: blur(10px);
 }

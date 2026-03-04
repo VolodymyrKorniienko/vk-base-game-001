@@ -5,7 +5,7 @@
   justify-content: center;
   min-height: 400px;
   padding: 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   border-radius: 16px;
   margin: 16px;
 }
@@ -29,7 +29,7 @@
   justify-content: space-around;
   margin: 32px 0;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
   border-radius: 12px;
   backdrop-filter: blur(10px);
 }
@@ -74,18 +74,18 @@
 }
 
 .shareButton {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-overlay-hover);
   color: white;
   border: 2px solid white;
 }
 
 .shareButton:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--surface-overlay-active);
 }
 
 .continueButton {
-  background: white;
-  color: #667eea;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-color);
 }
 
 .continueButton:hover {
@@ -100,7 +100,7 @@
 }
 
 .restartButton:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-overlay);
 }
 
 @media (max-width: 768px) {

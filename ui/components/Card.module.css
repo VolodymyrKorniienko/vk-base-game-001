@@ -1,8 +1,8 @@
 .card {
   aspect-ratio: 1;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--border-light);
   border-radius: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
@@ -43,7 +43,7 @@
 }
 
 .card.hidden {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: var(--card-hidden);
   color: transparent;
 }
 
@@ -52,13 +52,13 @@
 }
 
 .card.revealed {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--card-revealed);
   animation: reveal 0.3s ease;
 }
 
 .card.matched {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--card-matched);
+  border-color: var(--border-light-hover);
   animation: match 0.5s ease;
   cursor: default;
 }

@@ -45,6 +45,8 @@ export default function RootLayout({
       <html lang="en">
         <head>
           <meta name="base:app_id" content="6995d071e0d5d2cf831b6004" />
+          <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: light)" />
+          <meta name="theme-color" content="#2d1b69" media="(prefers-color-scheme: dark)" />
         </head>
         <body className={`${inter.variable} ${sourceCodePro.variable}`}>
           <SafeArea>{children}</SafeArea>

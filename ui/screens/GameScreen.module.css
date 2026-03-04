@@ -15,7 +15,7 @@
   height: 40px;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--btn-exit-bg);
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
@@ -27,7 +27,7 @@
 }
 
 .exitButton:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: var(--btn-exit-bg-hover);
   transform: scale(1.1);
 }
 
