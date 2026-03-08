@@ -28,8 +28,33 @@
     --btn-exit-bg-hover: rgba(0, 0, 0, 0.7);
   }
 
+  [data-theme="dark"] {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+
+      --gradient-primary: linear-gradient(135deg, #2d1b69 0%, #4a2080 100%);
+      --gradient-primary-alpha: linear-gradient(135deg, rgba(45, 27, 105, 0.95) 0%, rgba(74, 32, 128, 0.95) 100%);
+
+      --card-hidden: linear-gradient(135deg, #141e30 0%, #243b55 100%);
+      --card-revealed: linear-gradient(135deg, #c850c0 0%, #d63384 100%);
+      --card-matched: linear-gradient(135deg, #2575fc 0%, #00d4ff 100%);
+
+      --surface-overlay: rgba(255, 255, 255, 0.08);
+      --surface-overlay-hover: rgba(255, 255, 255, 0.15);
+      --surface-overlay-active: rgba(255, 255, 255, 0.2);
+      --border-light: rgba(255, 255, 255, 0.15);
+      --border-light-strong: rgba(255, 255, 255, 0.25);
+      --border-light-hover: rgba(255, 255, 255, 0.4);
+      --border-light-active: rgba(255, 255, 255, 0.5);
+
+      --btn-primary-bg: rgba(255, 255, 255, 0.15);
+      --btn-primary-color: #e0d4ff;
+      --btn-exit-bg: rgba(0, 0, 0, 0.6);
+      --btn-exit-bg-hover: rgba(0, 0, 0, 0.8);
+  }
+
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --background: #0a0a0a;
       --foreground: #ededed;
 
@@ -78,8 +103,13 @@
     padding: 0.25rem 0.5rem calc(0.25rem + 2px);
   }
 
+  [data-theme="dark"] code {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
   @media (prefers-color-scheme: dark) {
-    code {
+    :root:not([data-theme="light"]) code {
       background-color: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -96,8 +126,12 @@
     text-decoration: none;
   }
 
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
   @media (prefers-color-scheme: dark) {
-    html {
+    html:not([data-theme="light"]) {
       color-scheme: dark;
     }
   }

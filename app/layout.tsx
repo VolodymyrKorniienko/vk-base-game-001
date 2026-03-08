@@ -3,6 +3,7 @@ import { Inter, Source_Code_Pro } from "next/font/google";
 import { SafeArea } from "@coinbase/onchainkit/minikit";
 import { minikitConfig } from "../minikit.config";
 import { RootProvider } from "./rootProvider";
+import { ThemeToggle } from "../ui/components/ThemeToggle";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -49,6 +50,7 @@ export default function RootLayout({
           <meta name="theme-color" content="#2d1b69" media="(prefers-color-scheme: dark)" />
         </head>
         <body className={`${inter.variable} ${sourceCodePro.variable}`}>
+          <ThemeToggle />
           <SafeArea>{children}</SafeArea>
         </body>
       </html>

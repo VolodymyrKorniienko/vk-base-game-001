@@ -16,6 +16,7 @@ export interface GameConfig {
   rows: number;
   cols: number;
   previewDuration: number;
+  timeLimit?: number;
   categories?: CardCategory[];
 }
 
