@@ -28,6 +28,7 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
   const [remainingTime, setRemainingTime] = useState(config.timeLimit ?? DEFAULT_TIME_LIMIT);
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const gameStartedRef = useRef(false);
 
   const timeLimit = config.timeLimit ?? DEFAULT_TIME_LIMIT;
 
@@ -40,6 +41,7 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
     setIsGameOver(false);
     setGameOverResult(null);
     setRemainingTime(timeLimit);
+    gameStartedRef.current = false;
   }, [config, timeLimit]);
 
   const stopTimer = useCallback(() => {
@@ -69,6 +71,10 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
 
   const handleStartGame = useCallback(() => {
     if (!engine) return;
+    if (gameStartedRef.current) return;
+    if (engine.getState() !== 'preview') return;
+
+    gameStartedRef.current = true;
     engine.startGame();
     setIsPreviewActive(false);
     setPreviewTime(0);
@@ -87,18 +93,17 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
     }, 100);
   }, [engine, timeLimit, stopTimer]);
 
-  // Отслеживаем достижение 0 и вызываем game over
   useEffect(() => {
     if (remainingTime <= 0 && !isPreviewActive && !isGameOver && engine?.getState() === 'playing') {
       handleGameOver();
     }
   }, [remainingTime, isPreviewActive, isGameOver, engine, handleGameOver]);
 
-  // Очистка таймера при размонтировании
   useEffect(() => {
     return () => stopTimer();
   }, [stopTimer]);
 
+  // Preview countdown — только уменьшает previewTime, не вызывает handleStartGame напрямую
   useEffect(() => {
     if (!isPreviewActive || !engine) return;
 
@@ -106,7 +111,6 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
       setPreviewTime((prev) => {
         const newTime = prev - 100;
         if (newTime <= 0) {
-          handleStartGame();
           return 0;
         }
         return newTime;
@@ -114,7 +118,14 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isPreviewActive, engine, handleStartGame]);
+  }, [isPreviewActive, engine]);
+
+  // Когда previewTime достигает 0 — запускаем игру отдельным эффектом
+  useEffect(() => {
+    if (previewTime <= 0 && isPreviewActive && engine) {
+      handleStartGame();
+    }
+  }, [previewTime, isPreviewActive, engine, handleStartGame]);
 
   const handleSkipPreview = useCallback(() => {
     handleStartGame();
@@ -153,6 +164,7 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
   const handleRestart = useCallback(() => {
     if (!engine) return;
     stopTimer();
+    gameStartedRef.current = false;
     engine.reset();
     engine.startPreview();
     setPreviewTime(config.previewDuration);

@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeToggle } from '../components/ThemeToggle';
 import styles from './MenuScreen.module.css';
 
 export type GameMode = 'stage' | 'arcade';
@@ -12,6 +13,7 @@ interface MenuScreenProps {
 export function MenuScreen({ onStartStage, onStartArcade }: MenuScreenProps) {
   return (
     <div className={styles.menu}>
+      <ThemeToggle />
       <div className={styles.content}>
         <h1 className={styles.title}>Improve Your Memory</h1>
         <p className={styles.subtitle}>Test your memory skills and earn NFT achievements!</p>
