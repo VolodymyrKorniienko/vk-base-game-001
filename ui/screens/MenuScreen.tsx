@@ -3,14 +3,11 @@
 import { ThemeToggle } from '../components/ThemeToggle';
 import styles from './MenuScreen.module.css';
 
-export type GameMode = 'stage' | 'arcade';
-
 interface MenuScreenProps {
   onStartStage: () => void;
-  onStartArcade: () => void;
 }
 
-export function MenuScreen({ onStartStage, onStartArcade }: MenuScreenProps) {
+export function MenuScreen({ onStartStage }: MenuScreenProps) {
   return (
     <div className={styles.menu}>
       <ThemeToggle />
@@ -26,16 +23,6 @@ export function MenuScreen({ onStartStage, onStartArcade }: MenuScreenProps) {
             <span className={styles.modeTitle}>Stage Mode</span>
             <span className={styles.modeDescription}>
               Progress through levels with increasing difficulty
-            </span>
-          </button>
-          <button
-            type="button"
-            className={styles.modeButton}
-            onClick={onStartArcade}
-          >
-            <span className={styles.modeTitle}>Arcade Mode</span>
-            <span className={styles.modeDescription}>
-              Endless rounds with progressive difficulty
             </span>
           </button>
         </div>

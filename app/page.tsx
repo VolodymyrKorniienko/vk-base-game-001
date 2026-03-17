@@ -2,13 +2,12 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { StageModeScreen } from "../ui/screens/StageModeScreen";
-import { ArcadeModeScreen } from "../ui/screens/ArcadeModeScreen";
-import { MenuScreen, type GameMode } from "../ui/screens/MenuScreen";
+import { MenuScreen } from "../ui/screens/MenuScreen";
 import styles from "./page.module.css";
 
 export default function Home() {
   const { setFrameReady, isFrameReady } = useMiniKit();
-  const [gameMode, setGameMode] = useState<GameMode | null>(null);
+  const [gameMode, setGameMode] = useState<'menu' | 'stage' | null>(null);
   const frameReadyCalled = useRef(false);
 
   useEffect(() => {
@@ -22,16 +21,12 @@ export default function Home() {
     setGameMode('stage');
   }, []);
 
-  const handleStartArcade = useCallback(() => {
-    setGameMode('arcade');
+  const handleBackToMenu = useCallback(() => {
+    setGameMode('menu');
   }, []);
 
   if (gameMode === 'stage') {
-    return <StageModeScreen />;
-  }
-
-  if (gameMode === 'arcade') {
-    return <ArcadeModeScreen />;
+    return <StageModeScreen onBackToMenu={handleBackToMenu} />;
   }
 
   if (!isFrameReady) {
@@ -44,7 +39,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <MenuScreen onStartStage={handleStartStage} onStartArcade={handleStartArcade} />
+      <MenuScreen onStartStage={handleStartStage} />
     </div>
   );
 }

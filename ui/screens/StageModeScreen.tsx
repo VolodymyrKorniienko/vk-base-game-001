@@ -4,18 +4,21 @@ import { useState, useCallback } from 'react';
 import { StageMode } from '../../game/modes';
 import { STAGE_LEVELS } from '../../game/levels/config';
 import { GameScreen } from './GameScreen';
-import { MenuScreen } from './MenuScreen';
 import { useGameContract } from '../../web3/hooks/useGameContract';
 import { shareToTwitter, shareToFarcaster } from '../../social';
 import { TransactionStatus } from '../components/TransactionStatus';
 import type { GameResult } from '../../game/types';
 import styles from './StageModeScreen.module.css';
 
-type ScreenState = 'menu' | 'playing' | 'result';
+type ScreenState = 'playing' | 'result';
 
-export function StageModeScreen() {
+interface StageModeScreenProps {
+  onBackToMenu?: () => void;
+}
+
+export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const [stageMode] = useState(() => new StageMode(STAGE_LEVELS));
-  const [screenState, setScreenState] = useState<ScreenState>('menu');
+  const [screenState, setScreenState] = useState<ScreenState>('playing');
   const [currentResult, setCurrentResult] = useState<GameResult | null>(null);
   const { startSession, finishGame, isPending, isSuccess, error } = useGameContract();
 
@@ -56,11 +59,11 @@ export function StageModeScreen() {
         setCurrentResult(null);
       }
     } else {
-      setScreenState('menu');
+      onBackToMenu?.();
       setCurrentResult(null);
       stageMode.reset();
     }
-  }, [currentResult, stageMode]);
+  }, [currentResult, stageMode, onBackToMenu]);
 
   const handleRestart = useCallback(() => {
     const currentLevel = stageMode.getCurrentLevel();
@@ -82,17 +85,13 @@ export function StageModeScreen() {
   }, [currentResult]);
 
   const handleBackToMenu = useCallback(() => {
-    setScreenState('menu');
+    onBackToMenu?.();
     setCurrentResult(null);
     stageMode.reset();
-  }, [stageMode]);
+  }, [onBackToMenu]);
 
   const currentLevel = stageMode.getCurrentLevel();
   const progress = stageMode.getProgress();
-
-  if (screenState === 'menu') {
-    return <MenuScreen onStartStage={handleStartStage} onStartArcade={() => {}} />;
-  }
 
   if (screenState === 'result' && currentResult && currentLevel) {
     return (
