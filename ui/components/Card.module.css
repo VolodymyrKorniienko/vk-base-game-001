@@ -137,13 +137,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4px;
 }
 
 .image {
-  object-fit: contain;
-  padding: 12px;
-  width: calc(100% - 24px) !important;
-  height: calc(100% - 24px) !important;
+  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }
 
