@@ -23,15 +23,25 @@ export class MemoryEngine {
   initialize(): void {
     const totalCards = this.config.rows * this.config.cols;
     const pairs = totalCards / 2;
-    
+
     if (totalCards % 2 !== 0) {
       throw new Error('Grid must have even number of cards');
     }
 
-    const assetPairs = selectAssetPairs({
-      count: pairs,
-      categories: this.config.categories,
-    });
+    let assetPairs;
+    try {
+      assetPairs = selectAssetPairs({
+        count: pairs,
+        categories: this.config.categories,
+      });
+    } catch (error) {
+      // Fallback to mixed category if not enough assets available
+      console.warn('Failed to select assets, falling back to mixed category');
+      assetPairs = selectAssetPairs({
+        count: pairs,
+        categories: ['mixed'],
+      });
+    }
 
     const valueByAssetId = new Map<string, number>();
     let nextValue = 0;

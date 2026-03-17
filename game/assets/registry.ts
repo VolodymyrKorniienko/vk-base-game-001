@@ -1,6 +1,6 @@
 import type { CardAsset, CardCategory } from './types';
 
-const BASE_ICONS_PATH = '/assets/base-icons';
+const BASE_ICONS_PATH = `${process.env.NEXT_PUBLIC_URL || ''}/assets/base-icons`;
 
 const createAsset = (category: CardCategory, filename: string): CardAsset => ({
   id: `${category}-${filename.replace('.png', '')}`,
