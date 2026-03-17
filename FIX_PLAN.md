@@ -381,13 +381,13 @@ const handleStartStage = useCallback(async () => {
 
 | Файл | Проблема | Зміна | Пріоритет | Статус |
 |------|----------|-------|-----------|--------|
-| `ui/screens/GameScreen.tsx` | Engine не викликає startPreview() | Додати `engine.startPreview()` після initialize() | 🔴 Critical | ⏳ Pending |
-| `game/engine/memoryEngine.ts` | Відсутній bounds checking | Додати перевірку `position < 0 \|\| position >= this.cards.length` | 🔴 Critical | ⏳ Pending |
-| `game/engine/memoryEngine.ts` | Відсутня validation у processRevealedPair | Додати перевірку pos1/pos2 на undefined | 🔴 Critical | ⏳ Pending |
-| `ui/screens/GameScreen.tsx` | Занадто суворі перевірки стану | Дозволити перехід з idle або preview | 🟠 High | ⏳ Pending |
-| `game/assets/registry.ts` | Шляхи без PUBLIC_URL | Використовувати `process.env.NEXT_PUBLIC_URL` | 🟠 High | ⏳ Pending |
-| `game/engine/memoryEngine.ts` | Немає fallback для активів | Додати fallback на 'mixed' категорію | 🟡 Medium | ⏳ Pending |
-| `package.json` | Немає HTTPS для VK Bridge | Додати `HTTPS=true` до dev scripts | 🟡 Medium | ⏳ Pending |
+| `ui/screens/GameScreen.tsx` | Engine не викликає startPreview() | Додати `engine.startPreview()` після initialize() | 🔴 Critical | ✅ Done |
+| `game/engine/memoryEngine.ts` | Відсутній bounds checking | Додати перевірку `position < 0 \|\| position >= this.cards.length` | 🔴 Critical | ✅ Done |
+| `game/engine/memoryEngine.ts` | Відсутня validation у processRevealedPair | Додати перевірку pos1/pos2 на undefined | 🔴 Critical | ✅ Done |
+| `ui/screens/GameScreen.tsx` | Занадто суворі перевірки стану | Дозволити перехід з idle або preview | 🟠 High | ✅ Done |
+| `game/assets/registry.ts` | Шляхи без PUBLIC_URL | Використовувати `process.env.NEXT_PUBLIC_URL` | 🟠 High | ✅ Done |
+| `game/engine/memoryEngine.ts` | Немає fallback для активів | Додати fallback на 'mixed' категорію | 🟡 Medium | ✅ Done |
+| `package.json` | Немає HTTPS для VK Bridge | Додати `HTTPS=true` до dev scripts | 🟡 Medium | ✅ Done |
 
 ---
 
