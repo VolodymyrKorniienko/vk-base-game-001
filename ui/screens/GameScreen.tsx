@@ -73,7 +73,17 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
   const handleStartGame = useCallback(() => {
     if (!engine) return;
     if (gameStartedRef.current) return;
-    if (engine.getState() !== 'preview') return;
+    
+    const state = engine.getState();
+    // Дозволити перехід з idle або preview
+    if (state !== 'preview' && state !== 'idle') {
+      return;
+    }
+    
+    // Якщо ще не в preview, спочатку запустити preview
+    if (state === 'idle') {
+      engine.startPreview();
+    }
 
     gameStartedRef.current = true;
     engine.startGame();
