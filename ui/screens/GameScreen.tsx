@@ -122,7 +122,7 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
 
   // Когда previewTime достигает 0 — запускаем игру отдельным эффектом
   useEffect(() => {
-    if (previewTime <= 0 && isPreviewActive && engine) {
+    if (previewTime <= 0 && isPreviewActive && engine && !gameStartedRef.current) {
       handleStartGame();
     }
   }, [previewTime, isPreviewActive, engine, handleStartGame]);

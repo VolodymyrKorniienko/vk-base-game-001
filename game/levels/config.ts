@@ -11,6 +11,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 3,
     cols: 4,
     previewDuration: 4000,
+    timeLimit: 60000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -20,6 +21,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 4,
     cols: 4,
     previewDuration: 5000,
+    timeLimit: 90000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -29,6 +31,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 4,
     cols: 5,
     previewDuration: 6000,
+    timeLimit: 120000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -38,6 +41,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 4,
     cols: 6,
     previewDuration: 7000,
+    timeLimit: 150000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -47,6 +51,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 5,
     cols: 6,
     previewDuration: 8000,
+    timeLimit: 180000,
     categories: STAGE_CATEGORY,
   },
   {
@@ -56,6 +61,7 @@ export const STAGE_LEVELS: LevelConfig[] = [
     rows: 6,
     cols: 6,
     previewDuration: 9000,
+    timeLimit: 240000,
     categories: STAGE_CATEGORY,
   },
 ];
@@ -63,11 +69,11 @@ export const STAGE_LEVELS: LevelConfig[] = [
 const ARCADE_CATEGORY: CardCategory[] = ['mixed'];
 
 export const ARCADE_CONFIGS: GameConfig[] = [
-  { rows: 3, cols: 4, previewDuration: 4000, categories: ARCADE_CATEGORY },
-  { rows: 4, cols: 4, previewDuration: 5000, categories: ARCADE_CATEGORY },
-  { rows: 4, cols: 5, previewDuration: 6000, categories: ARCADE_CATEGORY },
-  { rows: 4, cols: 6, previewDuration: 7000, categories: ARCADE_CATEGORY },
-  { rows: 5, cols: 6, previewDuration: 8000, categories: ARCADE_CATEGORY },
+  { rows: 3, cols: 4, previewDuration: 4000, timeLimit: 60000, categories: ARCADE_CATEGORY },
+  { rows: 4, cols: 4, previewDuration: 5000, timeLimit: 90000, categories: ARCADE_CATEGORY },
+  { rows: 4, cols: 5, previewDuration: 6000, timeLimit: 120000, categories: ARCADE_CATEGORY },
+  { rows: 4, cols: 6, previewDuration: 7000, timeLimit: 150000, categories: ARCADE_CATEGORY },
+  { rows: 5, cols: 6, previewDuration: 8000, timeLimit: 180000, categories: ARCADE_CATEGORY },
 ];
 
 export function getLevelById(id: string): LevelConfig | undefined {

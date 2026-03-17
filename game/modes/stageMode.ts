@@ -24,6 +24,8 @@ export class StageMode {
       rows: level.rows,
       cols: level.cols,
       previewDuration: level.previewDuration,
+      timeLimit: level.timeLimit,
+      categories: level.categories,
     };
 
     this.engine = new MemoryEngine(gameConfig);

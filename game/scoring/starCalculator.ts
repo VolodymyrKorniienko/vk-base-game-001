@@ -16,7 +16,7 @@ export function calculateStars(
   const idealMoves = totalPairs;
   const maxMoves = totalPairs * 2.5;
   const maxMistakes = totalPairs * 0.5;
-  const maxTime = config.previewDuration * 10;
+  const maxTime = config.timeLimit ?? config.previewDuration * 10;
 
   const moveScore = Math.max(0, 1 - (result.moves - idealMoves) / (maxMoves - idealMoves));
   const mistakeScore = Math.max(0, 1 - result.mistakes / maxMistakes);
@@ -34,6 +34,6 @@ export function getStarCriteria(config: GameConfig): StarCriteria {
   return {
     maxMoves: Math.ceil(totalPairs * 2.5),
     maxMistakes: Math.ceil(totalPairs * 0.5),
-    maxTime: config.previewDuration * 10,
+    maxTime: config.timeLimit ?? config.previewDuration * 10,
   };
 }
