@@ -35,6 +35,7 @@ export function GameScreen({ config, onComplete, onExit, onGameOver }: GameScree
   useEffect(() => {
     const newEngine = new MemoryEngine(config);
     newEngine.initialize();
+    newEngine.startPreview();
     setEngine(newEngine);
     setPreviewTime(config.previewDuration);
     setIsPreviewActive(true);

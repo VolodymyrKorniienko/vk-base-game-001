@@ -85,6 +85,10 @@ export class MemoryEngine {
   }
 
   revealCard(position: number): boolean {
+    if (position < 0 || position >= this.cards.length) {
+      return false;
+    }
+
     if (this.state !== 'playing') {
       return false;
     }
@@ -110,6 +114,11 @@ export class MemoryEngine {
 
   private processRevealedPair(): void {
     const [pos1, pos2] = this.revealedCards;
+
+    if (pos1 === undefined || pos2 === undefined) {
+      return;
+    }
+
     const card1 = this.cards[pos1];
     const card2 = this.cards[pos2];
 
@@ -124,7 +133,7 @@ export class MemoryEngine {
       card2.state = 'matched';
       this.matchedPairs++;
       this.revealedCards = [];
-      
+
       if (this.isGameComplete()) {
         this.finishGame();
       }
