@@ -40,8 +40,31 @@
 .progress {
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   font-weight: 500;
+}
+
+.nftBadge {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  color: #1a1a1a;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+  }
 }
 
 .resultContent {
@@ -91,6 +114,11 @@
   width: 100%;
 }
 
+.shareSeparator {
+  height: 16px;
+  width: 100%;
+}
+
 .shareButton,
 .continueButton,
 .restartButton {
@@ -117,20 +145,27 @@
 }
 
 .continueButton {
-  background: var(--surface-glass-strong);
+  background: linear-gradient(135deg, #0052ff 0%, #0070f3 100%);
   color: white;
-  border-color: var(--border-light-hover);
-  box-shadow: 
+  border: none;
+  box-shadow:
     var(--shadow-glass-sm),
-    0 0 20px var(--btn-primary-glow);
+    0 0 20px rgba(0, 112, 243, 0.5),
+    0 4px 12px rgba(0, 82, 255, 0.3);
+  padding: 20px 32px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .continueButton:hover:not(:disabled) {
-  background: var(--surface-overlay-hover);
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    0 0 30px var(--btn-primary-glow);
+  background: linear-gradient(135deg, #0060ff 0%, #0080ff 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 112, 243, 0.6),
+    0 6px 20px rgba(0, 82, 255, 0.4);
 }
 
 .restartButton {

@@ -47,12 +47,15 @@ export class MemoryEngine {
     let nextValue = 0;
 
     const cardData: Array<{ value: number; image: string }> = assetPairs.map((asset) => {
-      const existingValue = valueByAssetId.get(asset.id);
+      // Извлекаем базовый ID актива (убираем суффиксы -a- и -b-)
+      const baseAssetId = asset.id.replace(/-[ab]-\d+$/, '');
+      
+      const existingValue = valueByAssetId.get(baseAssetId);
       if (existingValue !== undefined) {
         return { value: existingValue, image: asset.src };
       }
       const assignedValue = nextValue++;
-      valueByAssetId.set(asset.id, assignedValue);
+      valueByAssetId.set(baseAssetId, assignedValue);
       return { value: assignedValue, image: asset.src };
     });
 

@@ -13,8 +13,12 @@ interface GameGridProps {
 }
 
 export function GameGrid({ cards, onCardClick, disabled, rows, cols }: GameGridProps) {
+  // Используем уникальный ключ на основе массива карт для полного перерендера при изменении
+  const gridKey = cards.map(c => `${c.id}-${c.state}`).join('|');
+  
   return (
     <div
+      key={gridKey}
       className={styles.grid}
       style={{
         gridTemplateColumns: `repeat(${cols}, 1fr)`,

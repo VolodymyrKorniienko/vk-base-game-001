@@ -38,6 +38,11 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
       setCurrentResult(result);
       setScreenState('result');
 
+      // Якщо рівень пройдено з ≤20 ходами, NFT буде відмінтована автоматично
+      if (result.moves <= 20) {
+        console.log('Eligible for NFT reward! Minting...');
+      }
+
       try {
         await finishGame(result.moves);
       } catch (error) {
@@ -50,6 +55,9 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
 
   const handleContinue = useCallback(() => {
     if (!currentResult) return;
+
+    // Завершаємо текущий уровень
+    stageMode.completeLevel(currentResult);
 
     if (stageMode.hasNextLevel()) {
       const nextLevel = stageMode.getNextLevel();
@@ -94,6 +102,8 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const progress = stageMode.getProgress();
 
   if (screenState === 'result' && currentResult && currentLevel) {
+    const isEligibleForNFT = currentResult.moves <= 20;
+
     return (
       <div className={styles.container}>
         <div className={styles.resultWrapper}>
@@ -101,11 +111,18 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
           <div className={styles.progress}>
             Level {progress.current} of {progress.total}
           </div>
+          {isEligibleForNFT && (
+            <div className={styles.nftBadge}>
+              🏆 NFT Achievement Unlocked!
+            </div>
+          )}
           <TransactionStatus
             isPending={isPending}
             isSuccess={isSuccess}
             error={error}
-            message="Recording your achievement on-chain..."
+            message={isEligibleForNFT 
+              ? "Minting your NFT achievement..." 
+              : "Recording your game on-chain..."}
           />
           <div className={styles.resultContent}>
             <div className={styles.stats}>
@@ -126,20 +143,6 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
               </div>
             </div>
             <div className={styles.actions}>
-              <button
-                className={styles.shareButton}
-                onClick={handleShare}
-                disabled={isPending}
-              >
-                Share on Twitter
-              </button>
-              <button
-                className={styles.shareButton}
-                onClick={handleShareFarcaster}
-                disabled={isPending}
-              >
-                Share on Farcaster
-              </button>
               {stageMode.hasNextLevel() ? (
                 <button
                   className={styles.continueButton}
@@ -163,6 +166,21 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
                 disabled={isPending}
               >
                 Restart Level
+              </button>
+              <div className={styles.shareSeparator}></div>
+              <button
+                className={styles.shareButton}
+                onClick={handleShare}
+                disabled={isPending}
+              >
+                Share on Twitter
+              </button>
+              <button
+                className={styles.shareButton}
+                onClick={handleShareFarcaster}
+                disabled={isPending}
+              >
+                Share on Farcaster
               </button>
             </div>
           </div>

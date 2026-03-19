@@ -40,8 +40,12 @@ export function selectAssetPairs(options: SelectAssetsOptions): CardAsset[] {
   const selected = shuffled.slice(0, count);
 
   const pairs: CardAsset[] = [];
-  selected.forEach((asset) => {
-    pairs.push(asset, { ...asset });
+  selected.forEach((asset, index) => {
+    // Создаем пару с уникальными ID для каждой карты
+    pairs.push(
+      { ...asset, id: `${asset.id}-a-${index}` },
+      { ...asset, id: `${asset.id}-b-${index}` }
+    );
   });
 
   shuffleArray(pairs);

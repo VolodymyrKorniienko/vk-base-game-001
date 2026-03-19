@@ -45,3 +45,10 @@ next-env.d.ts
 /artifacts
 /cache
 /typechain-types
+
+# Windows reserved filenames
+nul
+con
+prn
+aux
+*.sys

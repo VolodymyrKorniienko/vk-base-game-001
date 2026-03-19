@@ -22,6 +22,9 @@ export const Card = memo(function Card({ card, onClick, disabled }: CardProps) {
   const isRevealed = card.state === 'revealed' || card.state === 'matched';
   const showImage = isRevealed && card.image;
 
+  // Уникальный ключ для предотвращения проблем с кэшированием
+  const imageKey = `${card.id}-${card.image}-${card.state}`;
+
   return (
     <button
       className={`${styles.card} ${styles[card.state]}`}
@@ -30,13 +33,15 @@ export const Card = memo(function Card({ card, onClick, disabled }: CardProps) {
       aria-label={`Card ${card.position + 1}`}
     >
       {showImage ? (
-        <div className={styles.imageContainer}>
+        <div className={styles.imageContainer} key={imageKey}>
           <Image
             src={card.image}
             alt={`Card ${card.position + 1}`}
             fill
             sizes="(max-width: 768px) 20vw, 120px"
             className={styles.image}
+            priority={card.position < 4}
+            loading="eager"
           />
         </div>
       ) : (

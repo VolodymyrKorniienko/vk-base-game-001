@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
+  images: {
+    // Оптимизация для предотвращения проблем с кэшированием
+    cacheDuration: 60,
+    minimumCacheTTL: 60,
+  },
 };
 
 export default nextConfig;
