@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   },
   images: {
     // Оптимизация для предотвращения проблем с кэшированием
-    cacheDuration: 60,
     minimumCacheTTL: 60,
   },
 };

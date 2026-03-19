@@ -50,13 +50,13 @@ git commit -m "Fix: Level counter, UI buttons, card loading, NFT rewards
 
 - Fix level counter not incrementing after completing levels
 - Reorder buttons: Next/Restart Level above Share buttons
-- Add separator between game action buttons and share buttons
+- Add separator between game action buttons and share buttons  
 - Style Next Level button: larger, brighter, gradient background
 - Fix card loading issues during extended gameplay:
   * Unique IDs for card pairs in selector
   * Unique keys for Image components
   * Grid re-render on card state changes
-  * Image caching optimization in next.config.ts
+  * Image caching optimization (minimumCacheTTL)
 - Add NFT achievement badge for levels completed with ≤20 moves
 - Add DEPLOYMENT.md with Base Mainnet deployment instructions
 - Add CHANGES_REPORT.md with detailed change summary
