@@ -127,7 +127,7 @@ export function useGameContract() {
     }
   };
 
-  const finishGame = async (totalMoves: number) => {
+  const finishGame = async (totalMoves: number, completed: boolean = true) => {
     if (!contractAvailable) {
       console.log('Contract not available, skipping finishGame');
       return;
@@ -144,7 +144,7 @@ export function useGameContract() {
           encodeFunctionData({
             abi: BASE_MEMORY_GAME_ABI,
             functionName: 'finishGame',
-            args: [BigInt(totalMoves)],
+            args: [BigInt(totalMoves), completed],
           }),
         );
         return sendCalls({
@@ -160,7 +160,7 @@ export function useGameContract() {
           encodeFunctionData({
             abi: BASE_MEMORY_GAME_ABI,
             functionName: 'finishGame',
-            args: [BigInt(totalMoves)],
+            args: [BigInt(totalMoves), completed],
           }),
         );
         return sendTransaction({ to: contractAddress, data });
@@ -170,7 +170,7 @@ export function useGameContract() {
         address: contractAddress,
         abi: BASE_MEMORY_GAME_ABI,
         functionName: 'finishGame',
-        args: [BigInt(totalMoves)],
+        args: [BigInt(totalMoves), completed],
       });
     } catch (err) {
       console.error('Failed to finish game:', err);

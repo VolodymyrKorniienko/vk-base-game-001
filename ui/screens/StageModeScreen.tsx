@@ -24,7 +24,13 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
 
   const handleStartStage = useCallback(async () => {
     try {
-      await startSession();
+      const currentLevel = stageMode.getCurrentLevel();
+      if (currentLevel) {
+        // Parse level number from level ID (e.g., "stage-1" -> 1)
+        const levelNumber = parseInt(currentLevel.id.split('-')[1]) || 1;
+        await startSession();
+        // Note: startSessionForLevel could be used for more granular tracking
+      }
     } catch (error) {
       // Игнорируем ошибки контракта, игра продолжает работать
       console.log('Contract call failed, continuing without on-chain features');
@@ -38,13 +44,13 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
       setCurrentResult(result);
       setScreenState('result');
 
-      // Якщо рівень пройдено з ≤20 ходами, NFT буде відмінтована автоматично
+      // NFT будет отминтована автоматически в контракте
       if (result.moves <= 20) {
         console.log('Eligible for NFT reward! Minting...');
       }
 
       try {
-        await finishGame(result.moves);
+        await finishGame(result.moves, result.completed);
       } catch (error) {
         // Игнорируем ошибки контракта, игра продолжает работать
         console.log('Contract call failed, continuing without on-chain features');

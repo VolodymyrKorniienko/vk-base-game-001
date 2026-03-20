@@ -18,7 +18,8 @@ export function GameOverScreen({ result, onRestart, onExit }: GameOverScreenProp
   const handleMintNFT = useCallback(async () => {
     if (!contractAvailable) return;
     try {
-      await finishGame(result.moves > 0 ? result.moves : 1);
+      // Передаём completed: false для проигрыша
+      await finishGame(result.moves > 0 ? result.moves : 1, false);
     } catch (err) {
       console.log('NFT mint failed:', err);
     }
