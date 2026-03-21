@@ -4,13 +4,14 @@ import { useState, useCallback } from 'react';
 import { StageMode } from '../../game/modes';
 import { STAGE_LEVELS } from '../../game/levels/config';
 import { GameScreen } from './GameScreen';
+import { NFTClaimScreen } from '../components/NFTClaimScreen';
 import { useGameContract } from '../../web3/hooks/useGameContract';
 import { shareToTwitter, shareToFarcaster } from '../../social';
 import { TransactionStatus } from '../components/TransactionStatus';
 import type { GameResult } from '../../game/types';
 import styles from './StageModeScreen.module.css';
 
-type ScreenState = 'playing' | 'result';
+type ScreenState = 'playing' | 'result' | 'nftClaim';
 
 interface StageModeScreenProps {
   onBackToMenu?: () => void;
@@ -20,7 +21,7 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const [stageMode] = useState(() => new StageMode(STAGE_LEVELS));
   const [screenState, setScreenState] = useState<ScreenState>('playing');
   const [currentResult, setCurrentResult] = useState<GameResult | null>(null);
-  const { startSession, finishGame, isPending, isSuccess, error } = useGameContract();
+  const { startSession, mintNFT, isPending, isSuccess, error } = useGameContract();
 
   const handleStartStage = useCallback(async () => {
     try {
@@ -42,21 +43,18 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const handleGameComplete = useCallback(
     async (result: GameResult) => {
       setCurrentResult(result);
-      setScreenState('result');
+      setNftMinted(false);
 
-      // NFT будет отминтована автоматически в контракте
+      // Если игрок получил ≤20 ходов, показываем экран NFT Claim
       if (result.moves <= 20) {
-        console.log('Eligible for NFT reward! Minting...');
-      }
-
-      try {
-        await finishGame(result.moves, result.completed);
-      } catch (error) {
-        // Игнорируем ошибки контракта, игра продолжает работать
-        console.log('Contract call failed, continuing without on-chain features');
+        setScreenState('nftClaim');
+        console.log('Eligible for NFT reward! Claim your NFT.');
+      } else {
+        setScreenState('result');
+        console.log('Level completed! Moves:', result.moves);
       }
     },
-    [finishGame]
+    []
   );
 
   const handleContinue = useCallback(() => {
@@ -107,6 +105,20 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const currentLevel = stageMode.getCurrentLevel();
   const progress = stageMode.getProgress();
 
+  // NFT Claim Screen для игроков с ≤20 ходами
+  if (screenState === 'nftClaim' && currentResult && currentLevel) {
+    return (
+      <NFTClaimScreen
+        result={currentResult}
+        onMint={mintNFT}
+        onContinue={() => setScreenState('result')}
+        isPending={isPending}
+        isSuccess={isSuccess}
+        error={error}
+      />
+    );
+  }
+
   if (screenState === 'result' && currentResult && currentLevel) {
     const isEligibleForNFT = currentResult.moves <= 20;
 
@@ -126,9 +138,8 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
             isPending={isPending}
             isSuccess={isSuccess}
             error={error}
-            message={isEligibleForNFT 
-              ? "Minting your NFT achievement..." 
-              : "Recording your game on-chain..."}
+            mode="transaction"
+            message="Recording your game on-chain..."
           />
           <div className={styles.resultContent}>
             <div className={styles.stats}>

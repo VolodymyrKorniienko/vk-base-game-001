@@ -179,6 +179,60 @@
   transform: translateY(-1px);
 }
 
+.mintNftButton {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+  color: #1a1a1a;
+  padding: 18px 32px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 4px 20px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mintNftButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffc700 0%, #ffe03e 50%, #ffc700 100%);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 8px 32px rgba(255, 215, 0, 0.6),
+    0 0 50px rgba(255, 215, 0, 0.5);
+}
+
+.mintNftButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nftSuccess {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #4ade80 100%);
+  color: #052e16;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(74, 222, 128, 0.5);
+  animation: successPulse 1.5s ease-in-out;
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(74, 222, 128, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 30px rgba(74, 222, 128, 0.7);
+  }
+}
+
 .shareButton:disabled,
 .continueButton:disabled,
 .restartButton:disabled {

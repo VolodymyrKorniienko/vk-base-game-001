@@ -8,9 +8,10 @@ interface TransactionStatusProps {
   isSuccess: boolean;
   error: Error | null;
   message?: string;
+  mode?: 'transaction' | 'minting';
 }
 
-export function TransactionStatus({ isPending, isSuccess, error, message }: TransactionStatusProps) {
+export function TransactionStatus({ isPending, isSuccess, error, message, mode = 'transaction' }: TransactionStatusProps) {
   // Не показываем статус, если контракт не настроен
   if (!isContractConfigured()) {
     return null;
@@ -20,18 +21,31 @@ export function TransactionStatus({ isPending, isSuccess, error, message }: Tran
     return null;
   }
 
+  const defaultMessages = {
+    transaction: {
+      pending: 'Processing transaction...',
+      success: 'Transaction confirmed!',
+    },
+    minting: {
+      pending: 'Minting your NFT achievement...',
+      success: 'NFT minted successfully!',
+    },
+  };
+
+  const messages = defaultMessages[mode];
+
   return (
     <div className={styles.status}>
       {isPending && (
         <div className={styles.pending}>
           <span className={styles.spinner}>⏳</span>
-          <span>{message || 'Processing transaction...'}</span>
+          <span>{message || messages.pending}</span>
         </div>
       )}
       {isSuccess && (
         <div className={styles.success}>
           <span>✅</span>
-          <span>Transaction confirmed!</span>
+          <span>{messages.success}</span>
         </div>
       )}
       {error && (

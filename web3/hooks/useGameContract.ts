@@ -177,6 +177,56 @@ export function useGameContract() {
     }
   };
 
+  const mintNFT = async (totalMoves: number) => {
+    if (!contractAvailable) {
+      console.log('Contract not available, skipping mintNFT');
+      return;
+    }
+
+    if (totalMoves <= 0) {
+      console.error('Invalid move count');
+      return;
+    }
+
+    try {
+      if (isPaymasterAvailable && paymasterUrl) {
+        const data = encodeWithAttribution(
+          encodeFunctionData({
+            abi: BASE_MEMORY_GAME_ABI,
+            functionName: 'finishGameSimple',
+            args: [BigInt(totalMoves)],
+          }),
+        );
+        return sendCalls({
+          calls: [{ to: contractAddress, data }],
+          capabilities: {
+            paymasterService: { url: paymasterUrl },
+          },
+        });
+      }
+
+      if (isBuilderCodeConfigured()) {
+        const data = encodeWithAttribution(
+          encodeFunctionData({
+            abi: BASE_MEMORY_GAME_ABI,
+            functionName: 'finishGameSimple',
+            args: [BigInt(totalMoves)],
+          }),
+        );
+        return sendTransaction({ to: contractAddress, data });
+      }
+
+      return writeContract({
+        address: contractAddress,
+        abi: BASE_MEMORY_GAME_ABI,
+        functionName: 'finishGameSimple',
+        args: [BigInt(totalMoves)],
+      });
+    } catch (err) {
+      console.error('Failed to mint NFT:', err);
+    }
+  };
+
   const { data: session } = useReadContract({
     address: contractAddress,
     abi: BASE_MEMORY_GAME_ABI,
@@ -190,6 +240,7 @@ export function useGameContract() {
   return {
     startSession,
     finishGame,
+    mintNFT,
     isPending: contractAvailable ? isPending : false,
     isSuccess: contractAvailable ? isSuccess : false,
     error: contractAvailable ? error : null,
