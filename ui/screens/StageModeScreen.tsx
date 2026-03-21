@@ -43,9 +43,8 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
   const handleGameComplete = useCallback(
     async (result: GameResult) => {
       setCurrentResult(result);
-      setNftMinted(false);
 
-      // Если игрок получил ≤20 ходов, показываем экран NFT Claim
+      // Якщо гравець отримав ≤20 ходів, показуємо екран NFT Claim
       if (result.moves <= 20) {
         setScreenState('nftClaim');
         console.log('Eligible for NFT reward! Claim your NFT.');
