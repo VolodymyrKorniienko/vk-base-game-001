@@ -110,6 +110,7 @@ export function StageModeScreen({ onBackToMenu }: StageModeScreenProps) {
       <NFTClaimScreen
         result={currentResult}
         onMint={mintNFT}
+        onStartSession={startSession}
         onContinue={() => setScreenState('result')}
         isPending={isPending}
         isSuccess={isSuccess}

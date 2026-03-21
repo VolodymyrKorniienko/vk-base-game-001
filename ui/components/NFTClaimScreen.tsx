@@ -8,6 +8,7 @@ import styles from './NFTClaimScreen.module.css';
 interface NFTClaimScreenProps {
   result: GameResult;
   onMint: (moves: number) => Promise<void>;
+  onStartSession?: () => Promise<void>;
   onContinue: () => void;
   isPending: boolean;
   isSuccess: boolean;
@@ -17,6 +18,7 @@ interface NFTClaimScreenProps {
 export function NFTClaimScreen({
   result,
   onMint,
+  onStartSession,
   onContinue,
   isPending,
   isSuccess,
@@ -25,8 +27,31 @@ export function NFTClaimScreen({
   const [hasClaimed, setHasClaimed] = useState(false);
 
   const handleClaim = async () => {
-    await onMint(result.moves);
-    setHasClaimed(true);
+    try {
+      // Спочатку переконуємося, що сесія активна
+      if (onStartSession) {
+        await onStartSession();
+        // Даємо час на активацію сесії
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+      await onMint(result.moves);
+      setHasClaimed(true);
+    } catch (err) {
+      console.error('NFT claim failed:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      // Якщо помилка "No active session", намагаємося ще раз
+      if (errorMessage.includes('No active session') && onStartSession) {
+        console.log('Retrying with new session...');
+        try {
+          await onStartSession();
+          await new Promise(resolve => setTimeout(resolve, 500));
+          await onMint(result.moves);
+          setHasClaimed(true);
+        } catch (retryErr) {
+          console.error('NFT claim retry failed:', retryErr);
+        }
+      }
+    }
   };
 
   const formatTime = (ms: number): string => {
@@ -113,10 +138,15 @@ export function NFTClaimScreen({
                   <span className={styles.pendingIcon}>⏳</span>
                   <span>Minting in progress...</span>
                 </>
+              ) : error ? (
+                <>
+                  <span className={styles.errorIcon}>❌</span>
+                  <span>{error.message || 'Claim failed. Try again!'}</span>
+                </>
               ) : (
                 <>
                   <span className={styles.errorIcon}>❌</span>
-                  <span>Claim failed. Try again!</span>
+                  <span>Ready to claim</span>
                 </>
               )}
             </div>
