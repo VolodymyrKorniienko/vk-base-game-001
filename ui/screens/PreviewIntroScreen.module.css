@@ -1,0 +1,391 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.backgroundGlow {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 40%);
+  animation: backgroundPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  gap: 32px;
+}
+
+/* Header Section */
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.logoImage {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
+  animation: logoFloat 4s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.featureCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: var(--surface-glass);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-glass-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featureCard:hover {
+  background: var(--surface-overlay-hover);
+  border-color: var(--border-light-hover);
+  transform: translateX(8px);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.featureContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.featureTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.featureDescription {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* NFT Badge */
+.nftBadge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.15) 0%,
+    rgba(255, 179, 71, 0.1) 100%
+  );
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: nftBadgeGlow 3s ease-in-out infinite;
+}
+
+@keyframes nftBadgeGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  }
+}
+
+.nftBadgeGlow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 215, 0, 0.1) 0%,
+    transparent 50%
+  );
+  animation: badgeShimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes badgeShimmer {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(50%) rotate(360deg);
+  }
+}
+
+.nftBadgeIcon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+  animation: iconSparkle 2s ease-in-out infinite;
+}
+
+@keyframes iconSparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(-10deg);
+  }
+  75% {
+    transform: scale(1.2) rotate(10deg);
+  }
+}
+
+.nftBadgeText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nftBadgeText strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 215, 0, 0.9);
+  letter-spacing: -0.3px;
+}
+
+.nftBadgeText span {
+  font-size: 0.8rem;
+  color: rgba(255, 215, 0, 0.6);
+}
+
+/* Start Button */
+.startButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 48px;
+  background: linear-gradient(135deg, #0052ff 0%, #0070f3 100%);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 8px 32px rgba(0, 82, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.startButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  transition: left 0.6s ease;
+  z-index: -1;
+}
+
+.startButton:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 16px 48px rgba(0, 82, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.startButton:hover::before {
+  left: 100%;
+}
+
+.startButton:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    0 4px 20px rgba(0, 82, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.startButtonText {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.startButtonArrow {
+  font-size: 1.4rem;
+  color: white;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.startButton:hover .startButtonArrow {
+  transform: translateX(4px);
+}
+
+/* Hint */
+.hint {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .brainIcon {
+    font-size: 2.8rem;
+  }
+
+  .iconWrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .featureCard {
+    padding: 16px;
+  }
+
+  .featureIcon {
+    font-size: 2rem;
+  }
+
+  .startButton {
+    padding: 18px 40px;
+  }
+
+  .startButtonText {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+  }
+
+  .content {
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 1.85rem;
+  }
+
+  .features {
+    gap: 12px;
+  }
+
+  .featureCard {
+    padding: 14px;
+  }
+
+  .featureTitle {
+    font-size: 1rem;
+  }
+
+  .featureDescription {
+    font-size: 0.85rem;
+  }
+
+  .nftBadge {
+    padding: 14px 20px;
+  }
+
+  .nftBadgeText strong {
+    font-size: 0.9rem;
+  }
+
+  .nftBadgeText span {
+    font-size: 0.75rem;
+  }
+
+  .startButton {
+    padding: 16px 32px;
+    width: 100%;
+  }
+}

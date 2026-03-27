@@ -18,5 +18,13 @@
       ]
     }
   },
-  "$version": 3
+  "$version": 3,
+  "permissions": {
+    "allow": [
+      "Bash(powershell *)",
+      "Bash(cmd *)",
+      "Bash(taskkill *)",
+      "Bash(c:\\users\\volodymyr\\desktop\\vk-base-game-001\\git-push.bat)"
+    ]
+  }
 }

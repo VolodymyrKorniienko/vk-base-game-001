@@ -238,3 +238,6 @@ MIT
 - [OnchainKit Documentation](https://onchainkit.xyz)
 - [Farcaster Mini-App Spec](https://miniapps.farcaster.xyz/docs/guides/publishing)
 - [Hardhat Documentation](https://hardhat.org/docs)
+
+## Qwen Added Memories
+- Для git-коммитов в проекте vk-base-game-001 на Windows использовать: powershell -NoProfile -Command "$env:Path = 'C:\Program Files\Git\cmd;C:\Program Files\Git\bin;' + $env:Path; git [команда]" - это обходит проблемы с execution policy и путями.
