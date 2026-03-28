@@ -3,6 +3,7 @@ import type { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY || "";
+const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY || "";
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -25,6 +26,19 @@ const config: HardhatUserConfig = {
       accounts: DEPLOYER_PRIVATE_KEY ? [DEPLOYER_PRIVATE_KEY] : [],
       chainId: 84532,
     },
+  },
+  etherscan: {
+    apiKey: BASESCAN_API_KEY,
+    customChains: [
+      {
+        network: "base",
+        chainId: 8453,
+        urls: {
+          apiURL: "https://api.basescan.org/api",
+          browserURL: "https://basescan.org",
+        },
+      },
+    ],
   },
 };
 

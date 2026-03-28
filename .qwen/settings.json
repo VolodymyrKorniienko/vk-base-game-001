@@ -24,7 +24,9 @@
       "Bash(powershell *)",
       "Bash(cmd *)",
       "Bash(taskkill *)",
-      "Bash(c:\\users\\volodymyr\\desktop\\vk-base-game-001\\git-push.bat)"
+      "Bash(c:\\users\\volodymyr\\desktop\\vk-base-game-001\\git-push.bat)",
+      "Bash(npm run *)",
+      "Bash(c:\\users\\volodymyr\\desktop\\vk-base-game-001\\git-commit-push.bat)"
     ]
   }
 }
